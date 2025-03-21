@@ -29,4 +29,4 @@ def __download_audio(youtube_url, output_path="."):
 
 
 if __name__ == "__main__":
-    download_audio("https://www.youtube.com/watch?v=5qap5aO4i9A")
+    __download_audio("https://www.youtube.com/watch?v=5qap5aO4i9A")
