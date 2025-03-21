@@ -1,10 +1,14 @@
-from .download import download_audio
-
+from .download import __download_audio
+import os
 
 def download_audios(urls, config):
+    audio_files = []
     for url in urls:
-        download_audio(url, config.temp_dir)
+        _file = __download_audio(url, output_path = config.temp_dir)
+        if _file:
+            audio_files.append(_file)
+    return audio_files
 
 
 def download_audio(url, config):
-    download_audio(url, config.temp_dir)
+    return __download_audio(url, config.temp_dir)
