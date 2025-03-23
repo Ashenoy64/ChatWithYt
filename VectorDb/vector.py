@@ -7,45 +7,47 @@ from langchain_chroma import Chroma
 def load_documents( documents ):
     loaded_documents = []
     for file in documents:
-        loader = TextLoader(file)
-        loaded_documents.extend(loader.load())
+        loader = TextLoader( file )
+        loaded_documents.extend( loader.load() )
     return loaded_documents
 
 
 def split_documents( documents, **kwargs ):
-    chunk_size = kwargs.get("chunk_size", 500)
-    chunk_overlap = kwargs.get("chunk_overlap", 50)
-    seperators = kwargs.get("seperators", ["\n\n", "\n", ". ", " ", ""])
+    chunk_size = kwargs.get( "chunk_size", 500 )
+    chunk_overlap = kwargs.get( "chunk_overlap", 50 )
+    seperators = kwargs.get( "seperators", ["\n\n", "\n", ". ", " ", ""] )
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
         length_function=len,
         separators=seperators
     )
-
-    chunks = text_splitter.split_documents(documents)
-    print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
+    chunks = text_splitter.split_documents( documents )
+    print(f"Split {len( documents )} documents into {len( chunks )} chunks.")
     return chunks
 
 
-def create_vectorstore(chunks, embeddings, db_name):
-    if os.path.exists(db_name):
-        shutil.rmtree(db_name)
+def create_vectorstore( chunks, embeddings, db_name ):
+    if os.path.exists( db_name ):
+        shutil.rmtree( db_name )
     vectorstore = Chroma.from_documents(
-        documents=chunks, embedding=embeddings, persist_directory=db_name,
+        documents=chunks,
+        embedding=embeddings,
+        persist_directory=db_name,
+        verbose=True,
     )
     print(f"Vectorstore created with {vectorstore._collection.count()} documents")
     return vectorstore
 
-def build_vectorstore(documents, embeddings, db_name, **kwargs):
-    loaded_documents = load_documents(documents)
-    chunks = split_documents(loaded_documents, **kwargs)
-    vectorstore = create_vectorstore(chunks, embeddings, db_name)
+def build_vectorstore( documents, embeddings, db_name, **kwargs ):
+    loaded_documents = load_documents( documents )
+    chunks = split_documents( loaded_documents, **kwargs )
+    vectorstore = create_vectorstore( chunks, embeddings, db_name )
     return vectorstore
 
 
 if __name__ == "__main__":
-    documents = [".temp/1.txt", ".temp/2.txt"]
-    embeddings = None #OllamaEmbeddings(temperature=0.7,model="nomic-embed-text")
+    documents = [ ".temp/1.txt", ".temp/2.txt" ]
+    embeddings = None # OllamaEmbeddings( temperature=0.7, model="nomic-embed-text" )
     db_name = "vector_store"
-    build_vectorstore(documents, embeddings, db_name)
+    build_vectorstore( documents, embeddings, db_name )
