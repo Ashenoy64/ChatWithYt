@@ -1,3 +1,4 @@
+import argparse
 from Utils import Config
 from Settings import *
 
@@ -25,22 +26,33 @@ def setup():
 def main( urls ):
     try:    
         config = setup()
-        # audio_files =  download_audios(urls, config)
-        # transcribed_files  = audio_to_text(audio_files, config)
-        transcribed_files = ['Building_Software_Systems_At_Google_and_Lessons_Learned.txt']
+        audio_files =  download_audios(urls, config)
+        transcribed_files  = audio_to_text(audio_files, config)
         vector_store = setup_vector_db(transcribed_files, config)
         rag = rag_chain(vector_store, config)
         launch_chat_interface(rag, config)
     except KeyboardInterrupt as e:
         print("Exiting...")
-        config.close()
     except Exception as e:
         print(e)
-        # config.close()
+    finally:
+        config.close()
     return
 
 
+def parese_arguments():
+    parser = argparse.ArgumentParser(description="Chat With Youtube Videos")
+    parser.add_argument(
+        'urls', 
+        metavar='URLS', 
+        type=str, 
+        nargs='+', 
+        help='Provide one or more YouTube video URLs in the format: https://www.youtube.com/watch?v=<VideoId>'
+    )
+    args = parser.parse_args()
+    return args.urls
+
 if __name__ == "__main__":
     # The url must be of this format: https://www.youtube.com/watch?v=<VideoId>
-    urls = ['https://www.youtube.com/watch?v=modXC5IWTJI']
+    urls = parese_arguments()
     main( urls )

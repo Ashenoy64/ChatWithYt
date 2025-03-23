@@ -1,6 +1,5 @@
 import os
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_ollama import ChatOllama
+from langchain_ollama import ChatOllama, OllamaEmbeddings
 from langchain.memory import ConversationBufferMemory
 import shutil
 
