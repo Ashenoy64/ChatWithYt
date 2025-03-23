@@ -14,11 +14,11 @@ def load_documents( documents ):
 
 def split_documents( documents, **kwargs ):
     chunk_size = kwargs.get("chunk_size", 500)
-    chunck_overlap = kwargs.get("chunck_overlap", 50)
+    chunk_overlap = kwargs.get("chunk_overlap", 50)
     seperators = kwargs.get("seperators", ["\n\n", "\n", ". ", " ", ""])
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
-        chuck_overlap=chunck_overlap,
+        chunk_overlap=chunk_overlap,
         length_function=len,
         separators=seperators
     )
@@ -32,7 +32,7 @@ def create_vectorstore(chunks, embeddings, db_name):
     if os.path.exists(db_name):
         shutil.rmtree(db_name)
     vectorstore = Chroma.from_documents(
-        documents=chunks, embedding=embeddings, persist_directory=db_name
+        documents=chunks, embedding=embeddings, persist_directory=db_name,
     )
     print(f"Vectorstore created with {vectorstore._collection.count()} documents")
     return vectorstore

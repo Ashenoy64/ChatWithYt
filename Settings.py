@@ -12,7 +12,7 @@ VECTOR_DB_NAME = "vector_store"
 
 DOCUMENT_SPLIT_OPTIONS = {
     'chunk_size': 500,
-    'chunck_overlap': 50,
+    'chunk_overlap': 50,
     'seperators': ["\n\n", "\n", ". ", " ", ""], 
 }
 

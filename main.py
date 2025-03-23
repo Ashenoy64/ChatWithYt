@@ -27,7 +27,7 @@ def main( urls ):
         config = setup()
         # audio_files =  download_audios(urls, config)
         # transcribed_files  = audio_to_text(audio_files, config)
-        transcribed_files = ['transcribed_files']
+        transcribed_files = ['Building_Software_Systems_At_Google_and_Lessons_Learned.txt']
         vector_store = setup_vector_db(transcribed_files, config)
         rag = rag_chain(vector_store, config)
         launch_chat_interface(rag, config)
@@ -36,6 +36,7 @@ def main( urls ):
         config.close()
     except Exception as e:
         print(e)
+        # config.close()
     return
 
 

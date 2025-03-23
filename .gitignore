@@ -11,3 +11,5 @@ __pycache__
 vector_db
 .sqlite3
 .temp
+vector_store
+.bin
