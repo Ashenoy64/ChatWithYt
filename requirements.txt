@@ -34,4 +34,6 @@ rich>=10.11.0
 sentence-transformers
 pytubefix
 pydub
+python-dotenv
 openai-whisper
+gradio
