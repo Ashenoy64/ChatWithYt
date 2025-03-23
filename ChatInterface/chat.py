@@ -1,13 +1,12 @@
 import gradio as gr
-import os
 
-def chat(question, history, conversation_chain):
-    result = conversation_chain.invoke({"question": question})
-    return result["answer"]
+def chat( question, history, conversation_chain ):
+    result = conversation_chain.invoke( { "question": question } )
+    return result[ "answer" ]
 
-def create_chat_interface(rag_chain):
-    def wrapper(question, history):
-        return chat(question, history, rag_chain)
+def create_chat_interface( rag_chain ):
+    def wrapper( question, history ):
+        return chat( question, history, rag_chain )
     
     interface =  gr.ChatInterface(
         wrapper,
