@@ -34,7 +34,6 @@ def create_vectorstore( chunks, embeddings, db_name ):
         documents=chunks,
         embedding=embeddings,
         persist_directory=db_name,
-        verbose=True,
     )
     print(f"Vectorstore created with {vectorstore._collection.count()} documents")
     return vectorstore
