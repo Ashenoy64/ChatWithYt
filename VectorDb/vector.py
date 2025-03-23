@@ -40,8 +40,11 @@ def create_vectorstore( chunks, embeddings, db_name ):
     return vectorstore
 
 def build_vectorstore( documents, embeddings, db_name, **kwargs ):
+    print( "Building VectorDB" )
     loaded_documents = load_documents( documents )
+    print( f"Loaded {len( loaded_documents )} documents." )
     chunks = split_documents( loaded_documents, **kwargs )
+    print( "Creating VectorStore" )
     vectorstore = create_vectorstore( chunks, embeddings, db_name )
     return vectorstore
 
